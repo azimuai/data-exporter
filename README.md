@@ -8,7 +8,7 @@ Supported git services:
 
 
 How to run:
-1. git clone https://gitlab.com/yudovenko/azimu-data-exporter.git
+1. git clone
 2. cd path azimu-data-exporter
 3. pip install -r requirements.txt
 3. update config file, vim config.yml
