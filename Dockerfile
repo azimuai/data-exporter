@@ -1,5 +1,6 @@
 FROM python:3.7-alpine
 
+RUN apk add --no-cache git
 ENV APP_USER="app" \
     APP_USER_SHELL="/sbin/nologin" \
     APP_USER_UID="1000"
