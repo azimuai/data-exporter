@@ -82,7 +82,6 @@ def __process_refs(repo, url):
             if r.status_code != 200:
                 logger.debug(ref_info)
                 # raise Exception(r.status_code)
-        return r.json()
 
 
 if __name__ == '__main__':
