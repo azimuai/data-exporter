@@ -1,5 +1,4 @@
 azimu_api:
   host: ${AZIMU_API_HOST}
-  port: ${AZIMU_API_PORT}
   auth_token: ${AZIMU_API_TOKEN}
 azimu_repo_path: ${AZIMU_EXPORTER_REPO_DIR}
