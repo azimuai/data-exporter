@@ -71,14 +71,20 @@ def __process_commits(repo, url):
 def __process_refs(repo, url):
     table_name = 'git_ref'
     for ref in repo.refs:
-        ref_info = vars(get_ref_info(ref))
-        if ref_info:
-            logger.debug("Git ref - {}".format(ref_info))
-            r = requests.post(f'{url}/{table_name}',
-                              json={"ref": json.dumps(ref_info, sort_keys=True, default=str)},
-                              headers={"AUTH_TOKEN": get_config("azimu_api.auth_token")})
-            if r.status_code != 200:
-                logger.debug(ref_info)
+        try:
+            ref_info = vars(get_ref_info(ref))
+            if ref_info:
+                logger.debug("Git ref - {}".format(ref_info))
+                r = requests.post(f'{url}/{table_name}',
+                                  json={"ref": json.dumps(ref_info, sort_keys=True, default=str)},
+                                  headers={"AUTH_TOKEN": get_config("azimu_api.auth_token")})
+                if r.status_code != 200:
+                    logger.debug(ref_info)
+        except Exception as e:
+            logger.debug(e)
+            logger.debug("No remote branch for the next ref: {}".format(ref))
+
+
 
 
 if __name__ == '__main__':
