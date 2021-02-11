@@ -25,7 +25,6 @@ def run():
     for repo in __get_repos(path):
         __process_repository(repo, url)
         __process_commits(repo, url)
-        __process_refs(repo, url)
 
 def __get_repos(path=''):
     path = os.path.abspath(path)
@@ -45,7 +44,7 @@ def __process_repository(repo, url):
                       json={"repository": json.dumps(repo_info, sort_keys=True, default=str)},
                       headers={"AUTH_TOKEN": get_config("azimu_api.auth_token")})
 
-    
+
 def __process_commits(repo, url):
     table_name = 'git_commit'
     commits = []
@@ -60,7 +59,6 @@ def __process_commits(repo, url):
                               headers={"AUTH_TOKEN": get_config("azimu_api.auth_token")})
             if r.status_code != 200:
                 logger.debug(commits)
-                
             commits = []
     if commits:
         r = requests.post(f'{url}/{table_name}', 
