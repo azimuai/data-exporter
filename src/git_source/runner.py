@@ -18,6 +18,10 @@ AUTH_TOKEN = os.environ.get('AZIMU_API_TOKEN')
 HOST = os.environ.get("AZIMU_API_HOST")
 PATH = os.environ.get("AZIMU_EXPORTER_REPO_DIR")
 
+logger.debug(f'AUTH_TOKEN: {AUTH_TOKEN}')
+logger.debug(f'HOST: {HOST}')
+logger.debug(f'PATHPATH: {PATH}')
+
 def run():
     url = f"https://{HOST}/data/git"
     for repo in __get_repos(PATH):
