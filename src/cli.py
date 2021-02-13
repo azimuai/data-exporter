@@ -3,9 +3,8 @@
 
 __version__ = "0.1"
 
-# from src.bitbucket import bitbucket_runner
 from src.git_source import runner as git_runner
-from src.utils import get_config, get_logger
+from src.utils import get_logger
 
 logger = get_logger("AzimuGitCLI")
 

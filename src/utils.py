@@ -86,12 +86,3 @@ def convert_unix_ts_to_datetime(unix_ts):
         miliseconds = "0"
     datetime_value = datetime.utcfromtimestamp(main_time).strftime('%Y-%m-%d %H:%M:%S')
     return ".".join([datetime_value, miliseconds])
-
-
-def get_config(path):
-    with open(CONFIG_PATH, 'r') as ymlfile:
-        cfg = yaml.safe_load(ymlfile)
-        parts = path.split(".")
-        for part in parts:
-            cfg = cfg[part]
-        return cfg

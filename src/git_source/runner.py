@@ -10,19 +10,17 @@ from git import Repo
 from src.git_source.commit import get_commit_payload
 from src.git_source.ref import get_ref_info
 from src.git_source.repository import get_repository_info
-from src.utils import get_logger, get_config
+from src.utils import get_logger
 
 logger = get_logger("GitSource Logger")
 BATCH_SIZE = 100
-ONE_HOUR_SEC = 3600
-
+AUTH_TOKEN = os.environ.get('AZIMU_API_TOKEN')
+HOST = os.environ.get("AZIMU_API_HOST")
+PATH = os.environ.get("AZIMU_EXPORTER_REPO_DIR")
 
 def run():
-    host = get_config("azimu_api.host")
-    path = get_config("azimu_repo_path")
-    endpoint = "data/git"
-    url = f"https://{host}/{endpoint}"
-    for repo in __get_repos(path):
+    url = f"https://{HOST}/data/git"
+    for repo in __get_repos(PATH):
         __process_repository(repo, url)
         __process_commits(repo, url)
 
@@ -42,7 +40,7 @@ def __process_repository(repo, url):
     logger.debug(f'{url}/{table_name}')
     r = requests.post(f'{url}/{table_name}',
                       json={"repository": json.dumps(repo_info, sort_keys=True, default=str)},
-                      headers={"AUTH_TOKEN": get_config("azimu_api.auth_token")})
+                      headers={"AUTH_TOKEN": AUTH_TOKEN})
 
 
 def __process_commits(repo, url):
@@ -56,14 +54,14 @@ def __process_commits(repo, url):
         if len(commits) == BATCH_SIZE:
             r = requests.post(f'{url}/{table_name}',
                               json={"data": json.dumps(commits, sort_keys=True, default=str)},
-                              headers={"AUTH_TOKEN": get_config("azimu_api.auth_token")})
+                              headers={"AUTH_TOKEN": AUTH_TOKEN})
             if r.status_code != 200:
                 logger.debug(commits)
             commits = []
     if commits:
         r = requests.post(f'{url}/{table_name}', 
                           json={"data": json.dumps(commits, sort_keys=True, default=str)},
-                          headers={"AUTH_TOKEN": get_config("azimu_api.auth_token")})
+                          headers={"AUTH_TOKEN": AUTH_TOKEN})
 
 
 def __process_refs(repo, url):
@@ -75,7 +73,7 @@ def __process_refs(repo, url):
                 logger.debug("Git ref - {}".format(ref_info))
                 r = requests.post(f'{url}/{table_name}',
                                   json={"ref": json.dumps(ref_info, sort_keys=True, default=str)},
-                                  headers={"AUTH_TOKEN": get_config("azimu_api.auth_token")})
+                                  headers={"AUTH_TOKEN": AUTH_TOKEN})
                 if r.status_code != 200:
                     logger.debug(ref_info)
         except Exception as e:
