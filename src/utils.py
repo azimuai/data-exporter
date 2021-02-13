@@ -2,11 +2,8 @@ import functools
 import logging
 import time
 from datetime import datetime
-# from logging import handlers
 
 import yaml
-from definitions import CONFIG_PATH
-# from definitions import LOGS_PATH
 
 
 def get_logger(name):
@@ -17,11 +14,6 @@ def get_logger(name):
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     stream.setFormatter(formatter)
     logger.addHandler(stream)
-    # Uncomment to have logs stored into the file, create logs dir before
-    # fh = handlers.RotatingFileHandler(LOGS_PATH, mode="w+", maxBytes=1e+7, backupCount=10)
-    # fh.setLevel(logging.INFO)
-    # fh.setFormatter(formatter)
-    # logger.addHandler(fh)
     return logger
 
 

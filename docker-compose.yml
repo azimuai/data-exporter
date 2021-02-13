@@ -6,6 +6,5 @@ services:
       dockerfile: Dockerfile
       context: .
     image: azimu/data-exporter:latest
-    # command: ["tail", "-f", "/dev/null"]
     restart: "no"
     env_file: .docker.env

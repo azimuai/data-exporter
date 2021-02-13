@@ -5,7 +5,6 @@ ENV APP_USER="app" \
     APP_USER_SHELL="/sbin/nologin" \
     APP_USER_UID="1000"
 ENV APP_HOME="/${APP_USER}"
-ENV APP_CONFIG_FILE="${APP_HOME}/config.yml"
 
 ENV DEPENDENCIES="gettext"
 
