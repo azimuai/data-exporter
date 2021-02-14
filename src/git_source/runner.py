@@ -44,7 +44,7 @@ def __process_repository(repo, url):
     logger.debug(f'{url}/{table_name}')
     r = requests.post(f'{url}/{table_name}',
                       json={"repository": json.dumps(repo_info, sort_keys=True, default=str)},
-                      headers={"AUTH_TOKEN": AUTH_TOKEN})
+                      headers={"AUTHENTICATION": AUTH_TOKEN})
 
 
 def __process_commits(repo, url):
@@ -58,14 +58,14 @@ def __process_commits(repo, url):
         if len(commits) == BATCH_SIZE:
             r = requests.post(f'{url}/{table_name}',
                               json={"data": json.dumps(commits, sort_keys=True, default=str)},
-                              headers={"AUTH_TOKEN": AUTH_TOKEN})
+                              headers={"AUTHENTICATION": AUTH_TOKEN})
             if r.status_code != 200:
                 logger.debug(commits)
             commits = []
     if commits:
         r = requests.post(f'{url}/{table_name}', 
                           json={"data": json.dumps(commits, sort_keys=True, default=str)},
-                          headers={"AUTH_TOKEN": AUTH_TOKEN})
+                          headers={"AUTHENTICATION": AUTH_TOKEN})
 
 
 def __process_refs(repo, url):
@@ -77,7 +77,7 @@ def __process_refs(repo, url):
                 logger.debug("Git ref - {}".format(ref_info))
                 r = requests.post(f'{url}/{table_name}',
                                   json={"ref": json.dumps(ref_info, sort_keys=True, default=str)},
-                                  headers={"AUTH_TOKEN": AUTH_TOKEN})
+                                  headers={"AUTHENTICATION": AUTH_TOKEN})
                 if r.status_code != 200:
                     logger.debug(ref_info)
         except Exception as e:
