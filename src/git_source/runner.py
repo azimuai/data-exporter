@@ -50,22 +50,24 @@ def __process_repository(repo, url):
 def __process_commits(repo, url):
     table_name = 'git_commit'
     commits = []
-    for commit in repo.iter_commits():
-        commit_info = get_commit_payload(commit)
-        commit_info.message = commit_info.message[:1000]
-        logger.debug("Git commit - {}".format(commit_info))
-        commits.append(vars(commit_info))
-        if len(commits) == BATCH_SIZE:
-            r = requests.post(f'{url}/{table_name}',
+    for branch in repo.branches:
+        repo.git.checkout(branch.name, force=True)
+        for commit in repo.iter_commits():
+            commit_info = get_commit_payload(commit)
+            commit_info.message = commit_info.message[:1000]
+            logger.debug("Git commit - {}".format(commit_info))
+            commits.append(vars(commit_info))
+            if len(commits) == BATCH_SIZE:
+                r = requests.post(f'{url}/{table_name}',
+                                  json={"data": json.dumps(commits, sort_keys=True, default=str)},
+                                  headers={"AUTHENTICATION": AUTH_TOKEN})
+                if r.status_code != 200:
+                    logger.debug(commits)
+                commits = []
+        if commits:
+            r = requests.post(f'{url}/{table_name}', 
                               json={"data": json.dumps(commits, sort_keys=True, default=str)},
                               headers={"AUTHENTICATION": AUTH_TOKEN})
-            if r.status_code != 200:
-                logger.debug(commits)
-            commits = []
-    if commits:
-        r = requests.post(f'{url}/{table_name}', 
-                          json={"data": json.dumps(commits, sort_keys=True, default=str)},
-                          headers={"AUTHENTICATION": AUTH_TOKEN})
 
 
 def __process_refs(repo, url):
