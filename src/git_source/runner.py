@@ -50,8 +50,10 @@ def __process_repository(repo, url):
 def __process_commits(repo, url):
     table_name = 'git_commit'
     commits = []
-    for branch in repo.branches:
-        repo.git.checkout(branch.name, force=True)
+    for ref in repo.refs:
+        if ref.endswith('stash'):
+            continue
+        repo.git.checkout(ref.name, force=True)
         for commit in repo.iter_commits():
             commit_info = get_commit_payload(commit)
             commit_info.message = commit_info.message[:1000]
