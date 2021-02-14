@@ -26,7 +26,7 @@ def run():
     url = f"https://{HOST}/data/git"
     for repo in __get_repos(PATH):
         repo.git.fetch(all=True)
-        repo.get.pull(all=True)
+        repo.git.pull(all=True)
         __process_repository(repo, url)
         __process_commits(repo, url)
 
