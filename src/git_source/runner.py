@@ -53,7 +53,7 @@ def __process_commits(repo, url):
     table_name = 'git_commit'
     commits = []
     for ref in repo.refs:
-        if str(ref).endswith('stash'):
+        if ref.name.endswith('stash'):
             continue
         repo.git.checkout(ref.name, force=True)
         for commit in repo.iter_commits():
