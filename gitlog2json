@@ -1,0 +1,15 @@
+#! /bin/sh
+
+# Use this one-liner to produce a JSON literal from the Git log:
+
+repository=$(basename `git rev-parse --show-toplevel`)
+git log \
+    --all \
+    --oneline \
+    --parents \
+    --show-pulls \
+    --decorate \
+    --source \
+    --full-history \
+    --date=iso8601-strict \
+    --pretty=format:"{%n\"hash\": \"%H\",%n \"parent\": \"%P\", %n \"author_name\":\"%an\", %n \"author_email\":\"%ae\", %n \"author date\":\"%ad\" , %n \"committer_name\": \"%cn\", %n \"commiter_email\": \"%ce\", %n \"committed_date\": \"%cd\" , %n \"ref name\": \"%S\" ,%n  \"message\": \"%f\",%n  \"repo_name\": \"$repository\"%n, \"parents\": \"%P\"%n}" | python -c "import sys,json;data = sys.stdin.read();data=data.replace('\n}\n{\n', '\n},\n{\n');data='[\n'+data;data=data+'\n]';print(json.loads(json.dumps(data)))"
