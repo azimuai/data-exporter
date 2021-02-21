@@ -1,0 +1,10 @@
+#! /bin/sh
+
+for dir in /app/repos/*;
+do 
+   echo ${dir}
+   cd ${dir}
+   sh /app/gitlog2json --all --parents --show-pulls --decorate --source --full-history | curl -X POST -H "AUTHENTICATION: ${AZIMU_API_TOKEN}" -H "Content-Type: application/json" --data-binary @- ${AZIMU_API_HOST}/data/git/git_commit
+   sh /app/gitmerge2json | curl -X POST -H "AUTHENTICATION: ${AZIMU_API_TOKEN}" -H "Content-Type: application/json" --data-binary @- ${AZIMU_API_HOST}/data/git/git_merges
+   sh /app/gitstat2json | jq | curl -X POST -H "AUTHENTICATION: ${AZIMU_API_TOKEN}" -H "Content-Type: application/json" --data-binary @- ${AZIMU_API_HOST}/data/git/git_stats
+done

@@ -4,6 +4,6 @@ export DEBUG="${DEBUG:-false}"
 if [ ${DEBUG} = "true" ]; then set -o xtrace; fi
 
 case ${1} in
-    app) exec python src/cli.py ;;
+    app) sh  /app/iteraterepos ;;
     *) exec "$@" ;;
 esac
