@@ -7,4 +7,4 @@
 # log, since both are keyed on the commit hash, which is unique.
 
 
-git log --numstat --format='COMMITBEGIN%n%H' $@ | python /app/git_stats.py
+git log --numstat --format='COMMITBEGIN%n%H' "$@" | python /app/git_stats.py

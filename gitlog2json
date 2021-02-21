@@ -1,6 +1,6 @@
 #! /bin/sh
 
-source ~/repo/startups/azimu/data-exporter/commit_format.sh
+source /app/commit_format.sh
 
 git log \
     --date=iso8601-strict \
