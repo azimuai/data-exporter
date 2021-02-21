@@ -1,7 +1,8 @@
-#! /bin/env python
+#! /usr/bin/env python3
 
 import sys
 import json
+
 data = sys.stdin.read()
 data = [k.split('\n\n') for k in [i.strip() for i in data.split('COMMITBEGIN')] if k]
 stats = {}

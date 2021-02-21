@@ -14,4 +14,4 @@
 
 # shellcheck disable=SC1004,SC2016
 
-git log --merges --first-parent --date-order --format=%h "$@" | xargs -I@ bash -c 'hash=@; ./gitlog2json --date-order ${hash}^..${hash} | jq -e ".[0].is_merge = true"' | jq --slurp -e '.'
+git log --merges --first-parent --date-order --format=%h "$@" | xargs -I@ sh -c 'hash=@; sh /app/gitlog2json --date-order ${hash}^..${hash} | jq -e ".[0].is_merge = true"' | jq --slurp -e '.'
