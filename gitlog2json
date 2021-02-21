@@ -1,8 +1,6 @@
 #! /bin/sh
 
-source /app/commit_format.sh
-
-repository=$(basename `git rev-parse --show-toplevel`)
+source ~/repo/startups/azimu/data-exporter/commit_format.sh
 
 git log \
     --date=iso8601-strict \
