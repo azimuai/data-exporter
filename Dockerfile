@@ -21,6 +21,6 @@ USER ${APP_USER}
 
 COPY --chown=${APP_USER}:${APP_USER} . ${APP_HOME}/
 
-RUN mkdir ${APP_HOME}/repos
+RUN mkdir ${APP_HOME}/repo
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["app"]

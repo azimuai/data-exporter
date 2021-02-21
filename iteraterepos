@@ -1,6 +1,6 @@
 #! /bin/sh
 
-for dir in /app/repos/*;
+for dir in /app/repo/*;
 do 
    echo ${dir}
    cd ${dir}
