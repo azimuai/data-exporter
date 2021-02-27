@@ -2,7 +2,7 @@
 
 import sys
 import json
-
+import os
 data = sys.stdin.read()
 data = [k.split('\n\n') for k in [i.strip() for i in data.split('COMMITBEGIN')] if k]
 stats = {}
@@ -13,7 +13,7 @@ for i in data:
         inner_stats = []
         for stat in i[1].split('\n'):
             stat = stat.split('\t')
-            inner_stats.append({'insertions':stat[0], 'deletions':stat[1],'path':stat[2]})
+            inner_stats.append({'insertions':stat[0], 'deletions':stat[1],'path':stat[2], 'repo_name': os.environ.get('REPOSITORY')})
         stats[i[0]] = inner_stats
 
 print(json.dumps(stats))

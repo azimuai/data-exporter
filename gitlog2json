@@ -1,7 +1,5 @@
 #! /bin/sh
 
-source /app/commit_format.sh
-
 git log \
     --date=iso8601-strict \
-    --pretty=format:"${format}" "$@" | python /app/git_log.py
+    --pretty=format:"${FORMAT}" "$@" | python /app/git_log.py | sed 's/\\/\//g'
