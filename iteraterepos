@@ -9,7 +9,7 @@ do
    
    export REPOSITORY=$(basename `git rev-parse --show-toplevel`)
 
-   export FORMAT="{%n \"hash\": \"%H\",%n \"author_name\":\"\",%n \"author_email\":\"%ae\",%n \"author_date\":\"%ad\" ,%n \"committer_name\": \"\",%n \"commiter_email\": \"%ce\",%n \"committed_date\": \"%cd\" ,%n \"ref_name\": \"%S\" ,%n \"message\": \"%f\",%n \"repo_name\": \"${REPOSITORY}\",%n \"parents\": \"%P\"%n}"
+   export FORMAT="{%n \"hash\": \"%H\",%n \"author_name\":\"%an\",%n \"author_email\":\"%ae\",%n \"author_date\":\"%ad\" ,%n \"committer_name\": \"%cn\",%n \"commiter_email\": \"%ce\",%n \"committed_date\": \"%cd\" ,%n \"ref_name\": \"%S\" ,%n \"message\": \"%f\",%n \"repo_name\": \"${REPOSITORY}\",%n \"parents\": \"%P\"%n}"
 
    sh /app/gitlog2json --all --parents --decorate --source --full-history | curl -L -X POST -H "AUTHENTICATION: ${AZIMU_API_TOKEN}" -H "Content-Type: application/json" --data-binary @- ${AZIMU_API_HOST}/data/git/git_commit
    sh /app/gitmerge2json | curl -L -X POST -H "AUTHENTICATION: ${AZIMU_API_TOKEN}" -H "Content-Type: application/json" --data-binary @- ${AZIMU_API_HOST}/data/git/git_merges
