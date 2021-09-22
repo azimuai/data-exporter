@@ -11,7 +11,7 @@ do
 
    export FORMAT="{%n \"hash\": \"%H\",%n \"author_name\":\"%an\",%n \"author_email\":\"%ae\",%n \"author_date\":\"%ad\" ,%n \"committer_name\": \"%cn\",%n \"commiter_email\": \"%ce\",%n \"committed_date\": \"%cd\" ,%n \"ref_name\": \"%S\" ,%n \"message\": \"%f\",%n \"repo_name\": \"${REPOSITORY}\",%n \"parents\": \"%P\"%n}"
 
-   sh /app/gitlog2json --all --parents --decorate --source --full-history | curl -L -X POST -H "AZIMU_API_TOKEN: ${AZIMU_API_TOKEN}" -H "Content-Type: application/json" --data-binary @- ${AZIMU_API_HOST}/api/v1/git/git_commit
-   sh /app/gitmerge2json | curl -L -X POST -H "AZIMU_API_TOKEN: ${AZIMU_API_TOKEN}" -H "Content-Type: application/json" --data-binary @- ${AZIMU_API_HOST}/api/v1/git/git_merges
-   sh /app/gitstat2json | jq | curl -L -X POST -H "AZIMU_API_TOKEN: ${AZIMU_API_TOKEN}" -H "Content-Type: application/json" --data-binary @- ${AZIMU_API_HOST}/api/v1/git/git_stats
+   sh /app/gitlog2json --all --parents --decorate --source --full-history | curl -L -X POST -H "AZIMU_API_TOKEN: ${AZIMU_API_TOKEN}" -H "Content-Type: application/json" --data-binary @- https://app.azimu.ai/api/v1/git/git_commit
+   sh /app/gitmerge2json | curl -L -X POST -H "AZIMU_API_TOKEN: ${AZIMU_API_TOKEN}" -H "Content-Type: application/json" --data-binary @- https://app.azimu.ai/api/v1/git/git_merges
+   sh /app/gitstat2json | jq | curl -L -X POST -H "AZIMU_API_TOKEN: ${AZIMU_API_TOKEN}" -H "Content-Type: application/json" --data-binary @- https://app.azimu.ai/api/v1/git/git_stats
 done
